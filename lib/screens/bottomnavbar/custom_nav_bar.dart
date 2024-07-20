@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:shop_sharrie/screens/bottomnavbar/bottom_nav_items.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
-  const CustomBottomNavigationBar({super.key, required this.currentIndex});
+  const CustomBottomNavigationBar(
+      {super.key, required this.currentIndex, required this.onTap});
 
   final int currentIndex;
+  final void Function(int index) onTap;
 
   @override
   Widget build(BuildContext context) {

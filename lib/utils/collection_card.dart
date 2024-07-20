@@ -4,7 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../models/api_model.dart';
-import '../screens/product_description.dart';
+import '../screens/product_description_screen.dart';
 
 class CollectionCard extends StatelessWidget {
   const CollectionCard({
@@ -34,7 +34,7 @@ class CollectionCard extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const ProductDescription()));
+                        builder: (context) => ProductDescriptionScreen(product: product,)));
               },
               child: ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(5)),

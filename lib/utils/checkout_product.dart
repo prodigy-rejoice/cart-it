@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shop_sharrie/screens/cart.dart';
+import 'package:shop_sharrie/screens/cart/cart_screen.dart';
+import 'package:stacked/stacked.dart';
 
-class CheckOutProduct extends StatelessWidget {
-  const CheckOutProduct({
+import '../models/api_model.dart';
+import '../screens/cart/cart_view_model.dart';
+
+class CheckOutProduct extends StackedView<CartViewModel> {
+  const CheckOutProduct(
+    this.product, {
     super.key,
     required this.color,
     required this.title,
@@ -12,9 +17,10 @@ class CheckOutProduct extends StatelessWidget {
   final int color;
   final String title;
   final String price;
+  final Product product;
 
   @override
-  Widget build(BuildContext context) {
+  Widget builder(BuildContext context, CartViewModel viewModel, Widget? child) {
     return Container(
       width: double.infinity,
       height: 80,
@@ -73,8 +79,9 @@ class CheckOutProduct extends StatelessWidget {
               backgroundColor:
                   const MaterialStatePropertyAll(Color(0xff408C2B))),
           onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => const Cart()));
+            viewModel.addToCart(product);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const CartScreen()));
           },
           child: Text('Checkout',
               style: GoogleFonts.poppins(
@@ -84,5 +91,10 @@ class CheckOutProduct extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  CartViewModel viewModelBuilder(BuildContext context) {
+    return CartViewModel();
   }
 }

@@ -1,8 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shop_sharrie/screens/product_details/product_details_screen.dart';
 import '../models/api_model.dart';
-import '../screens/product_description.dart';
+import '../screens/product_description_screen.dart';
 
 class ShopItemCard extends StatelessWidget {
   const ShopItemCard({
@@ -39,7 +40,9 @@ class ShopItemCard extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const ProductDescription()));
+                        builder: (context) => ProductDescriptionScreen(
+                              product: product,
+                            )));
               },
               child: ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(5)),
@@ -83,7 +86,13 @@ class ShopItemCard extends StatelessWidget {
                       elevation: const MaterialStatePropertyAll(0),
                       backgroundColor:
                           const MaterialStatePropertyAll(Color(0xffFFFFFF))),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                ProductDetailsScreen(product: product)));
+                  },
                   child: Text('Add to Cart',
                       style: GoogleFonts.poppins(
                           fontWeight: FontWeight.w400,

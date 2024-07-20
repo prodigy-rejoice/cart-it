@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shop_sharrie/screens/home_screen.dart';
+import 'package:shop_sharrie/models/api_model.dart';
+import 'package:shop_sharrie/screens/home/home_screen.dart';
 import 'package:shop_sharrie/utils/shop_item_card.dart';
 
 import '../utils/dummy_shop_item.dart';
@@ -76,30 +77,6 @@ class EmptyCart extends StatelessWidget {
                         color: const Color(0xffFFFFFF))),
               ),
               const Gap(40),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Recently viewed',
-                    style: GoogleFonts.poppins(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w300,
-                        color: const Color(0xff0A0B0A),
-                        letterSpacing: 2),
-                  ),
-                  Text(
-                    'View all',
-                    style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 12,
-                        color: const Color(0xff408C2B)),
-                  ),
-                ],
-              ),
-              const Divider(),
-              const Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Flexible(child: DummyItemCard())),
             ],
           ),
         ),

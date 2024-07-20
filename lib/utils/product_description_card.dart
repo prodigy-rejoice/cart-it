@@ -18,11 +18,11 @@ class ProjectDescriptionCard extends StatelessWidget {
         child: ClipRRect(
           borderRadius: const BorderRadius.all(Radius.circular(3)),
           child: Container(
+            margin: EdgeInsets.all(10),
             height: 160,
-            decoration: (BoxDecoration(
-              image:
-                  DecorationImage(image: AssetImage(image), fit: BoxFit.cover),
-            )),
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: NetworkImage(image), fit: BoxFit.cover)),
           ),
         ),
       ),

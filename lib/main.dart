@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:shop_sharrie/screens/home_screen.dart';
+import 'package:shop_sharrie/app/app.locator.dart';
+import 'package:shop_sharrie/screens/home/home_screen.dart';
 
 void main() {
-  runApp(MyShoppingApp());
+  setupLocator();
+  runApp(
+    const MyShoppingApp(),
+  );
 }
 
 class MyShoppingApp extends StatelessWidget {

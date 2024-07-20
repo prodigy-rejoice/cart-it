@@ -1,70 +1,24 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:shop_sharrie/screens/bottomnavbar/custom_nav_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gap/gap.dart';
-import 'package:shop_sharrie/screens/empty_cart.dart';
+import 'package:shop_sharrie/screens/cart/cart_screen.dart';
+import 'package:shop_sharrie/screens/home/home_view_model.dart';
 import 'package:shop_sharrie/utils/collection_card.dart';
+import 'package:stacked/stacked.dart';
+import '../../utils/shop_item_card.dart';
 
-import '../models/api_model.dart';
-import '../utils/shop_item_card.dart';
-
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  List<Product> products = [];
-  @override
-  void initState() {
-    super.initState();
-    fetchProducts();
-  }
-
-  static const String apiKey =
-      '9713371a82c24374ab53094e6d7057cc20240713153049998114';
-  static const String appId = '97W459JCOYHKQF6';
-  static const String organizationId = 'b3cc8c67fa7049909c9b38033787792b';
-  static const String baseUrl = "https://api.timbu.cloud/products";
-
-  Future<void> fetchProducts() async {
-    const url =
-        '$baseUrl?organization_id=$organizationId&reverse_sort=false&page=1&size=25&Appid=$appId&Apikey=$apiKey';
-    try {
-      http.Response response = await http.get(Uri.parse(url));
-
-      if (response.statusCode == 200) {
-        String data = response.body;
-
-        Map<String, dynamic> jsonData = json.decode(data);
-        if (jsonData.containsKey('items')) {
-          List<dynamic> productData = jsonData['items'];
-          List<Product> fetchedProducts =
-              productData.map((value) => Product.fromJson(value)).toList();
-          setState(() {
-            products = fetchedProducts;
-          });
-        } else {
-          print('Unexpected JSON format: $jsonData');
-        }
-      } else {
-        print('Failed to load products: ${response.statusCode}');
-        throw Exception('Failed to load products');
-      }
-    } catch (e) {
-      print('Error fetching products: $e');
-    }
-  }
+class HomeScreen extends StackedView<HomeScreenViewModel> {
+  HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    int index = 0;
+  Widget builder(
+      BuildContext context, HomeScreenViewModel viewModel, Widget? child) {
     return Scaffold(
-      bottomNavigationBar: CustomBottomNavigationBar(currentIndex: index),
+      bottomNavigationBar: CustomBottomNavigationBar(
+        currentIndex: viewModel.currentIndex,
+        onTap: viewModel.onTap,
+      ),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         surfaceTintColor: Colors.transparent,
@@ -86,18 +40,24 @@ class _HomeScreenState extends State<HomeScreen> {
             child: IconButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => EmptyCart()));
+                    MaterialPageRoute(builder: (context) => CartScreen()));
               },
               icon: const Icon(
-                Icons.shopping_cart_outlined,
+                Icons.add_to_queue_outlined,
                 color: Color(0xff433F3E),
               ),
             ),
-          )
+          ),
         ],
       ),
       backgroundColor: const Color(0xffFFFFFF),
-      body: ListView(
+      body:
+          // isLoading
+          // ? Center(
+          //     child: CircularProgressIndicator(),
+          //   )
+          // :
+          ListView(
         padding: const EdgeInsets.symmetric(horizontal: 30),
         children: [
           const Gap(20),
@@ -155,14 +115,13 @@ class _HomeScreenState extends State<HomeScreen> {
           SizedBox(
             height: 250,
             child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return ShopItemCard(
-                  product: products[index],
-                );
-              },
-              itemCount: products.length,
-            ),
+                scrollDirection: Axis.horizontal,
+                itemCount: viewModel.productsCount,
+                itemBuilder: (context, index) {
+                  return ShopItemCard(
+                    product: viewModel.products[index],
+                  );
+                }),
           ),
           const Gap(30),
           Row(
@@ -186,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
           const Gap(20),
           GridView.builder(
             padding: EdgeInsets.all(0),
-            itemCount: products.length,
+            itemCount: viewModel.productsCount,
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -197,7 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             itemBuilder: (context, index) {
               return ShopItemCard(
-                product: products[index],
+                product: viewModel.products[index],
               );
             },
           ),
@@ -211,7 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Gap(15),
           GridView.builder(
             padding: EdgeInsets.all(0),
-            itemCount: products.length > 4 ? 4 : products.length,
+            itemCount: viewModel.productsCount,
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -222,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             itemBuilder: (context, index) {
               return CollectionCard(
-                product: products[index],
+                product: viewModel.products[index],
               );
             },
           ),
@@ -248,7 +207,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Gap(15),
           GridView.builder(
             padding: EdgeInsets.all(0),
-            itemCount: products.length,
+            itemCount: viewModel.productsCount,
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -259,12 +218,17 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             itemBuilder: (context, index) {
               return ShopItemCard(
-                product: products[index],
+                product: viewModel.products[index],
               );
             },
           ),
         ],
       ),
     );
+  }
+
+  @override
+  HomeScreenViewModel viewModelBuilder(BuildContext context) {
+    return HomeScreenViewModel();
   }
 }

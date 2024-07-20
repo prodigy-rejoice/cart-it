@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shop_sharrie/screens/cart.dart';
-import '../screens/product_description.dart';
+import 'package:shop_sharrie/models/api_model.dart';
+import 'package:shop_sharrie/screens/cart/cart_screen.dart';
+import '../screens/product_description_screen.dart';
 
 class DummyItemCard extends StatelessWidget {
   const DummyItemCard({
     super.key,
+    required this.product,
   });
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
+    String getImageUrl(String? urLink) {
+      String? urL =
+          'https://api.timbu.cloud/images/$urLink?organization_id=b3cc8c67fa7049909c9b38033787792b&reverse_sort=false&page=1&size=25&Appid=97W459JCOYHKQF6&Apikey=9713371a82c24374ab53094e6d7057cc20240713153049998114';
+      return urL;
+    }
+
     return SizedBox(
       width: 170,
       child: Card(
@@ -23,7 +32,9 @@ class DummyItemCard extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const ProductDescription()));
+                        builder: (context) => ProductDescriptionScreen(
+                              product: product,
+                            )));
               },
               child: ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(5)),
@@ -31,8 +42,10 @@ class DummyItemCard extends StatelessWidget {
                   height: 160,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                        image:
-                            AssetImage('assets/Repair scrub container (2).png'),
+                        image: NetworkImage(getImageUrl(
+                            product.photos!.isNotEmpty
+                                ? product.photos!.first.url
+                                : '')),
                         fit: BoxFit.cover),
                   ),
                 ),
@@ -67,8 +80,8 @@ class DummyItemCard extends StatelessWidget {
                     backgroundColor:
                         const MaterialStatePropertyAll(Color(0xffFFFFFF))),
                 onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => Cart()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => CartScreen()));
                 },
                 child: Text('Add to Cart',
                     style: GoogleFonts.poppins(
