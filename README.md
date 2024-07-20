@@ -1,6 +1,6 @@
-# HNG TASH 3
+# HNG TASH 3,now 4
 
-This is HNG Task 3 - it is a pixel-perfect implementation of a Timbu Shop Design from a great designer.
+This is HNG Task 4 - it is a pixel-perfect and logical implementation of a Timbu Shop Design from a great designer.
 
 ## App Information
 - This app was perfectly cloned from a Figma link. The link is provided below.
@@ -22,6 +22,7 @@ To set up this flutter project locally,
   - cached_network_image:- is a Flutter library that allows you to cache images. Caching is a process that temporarily stores data, in this case, images, for faster access in the future. This package not only allows you to cache images but also supports placeholders and fading images while the image loads.
   - google_fonts:- a flutter package to use fonts from fonts.google.com. Supports HTTP fetching, caching, and asset bundling.
   - gap:- it empowers you to streamline the process of adding space between widgets in your Flutter applications.
+  - stacked architecture was used for state management and each concerned screen has uts view Models. 
 
  ## API Integration
  To use Timbu API:
@@ -32,10 +33,10 @@ To set up this flutter project locally,
 - I collaborated with a QA tester to perform test cases and test the app.
 
 ## Additional Details:
-- Appetize Link: https://appetize.io/app/b_fa32ozj3rpbkjpblbuymw34xvi
-- APK Download Link: https://drive.google.com/file/d/13buAdAKRnP8aRKKm2-iylZZ3EbdV5_MJ/view?usp=sharing
+- Appetize Link: https://appetize.io/app/b_hlljz6zndxvum3uxj5msnesroa
+- APK Download Link: https://drive.google.com/file/d/16JfYHfrEahARHrw6vm2smQqzmskSjI7q/view?usp=drivesdk
 - Figma Link: https://www.figma.com/design/clF99fTP4N8Brmt0PtPz5C/HNG-Internship-projects?node-id=487-2831
-- 
+- Tester's Link: https://docs.google.com/spreadsheets/d/1sy3r9ebepmwctWt2WEbbvVGnflxMqt4aPIVz8rpfhwc/edit?usp=drivesdk
 
 ## Images of The App
 ![Screenshot_20240713_211553](https://github.com/user-attachments/assets/5392fc10-709d-4bfa-b219-5dfc5da920ef)
@@ -45,3 +46,4 @@ To set up this flutter project locally,
 ![Screenshot_20240713_211808](https://github.com/user-attachments/assets/5b274ef2-422b-44d7-8c9d-1fb52d5adae0)
 ![Screenshot_20240713_211839](https://github.com/user-attachments/assets/ffa0aaec-403f-49e2-9842-acdbcf1cf458)
 ![Screenshot_20240713_211856](https://github.com/user-attachments/assets/b0de99ee-9b43-49bf-a707-78ea02d8cba3)
+
